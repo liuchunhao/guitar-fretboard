@@ -1,10 +1,9 @@
 .fretboard-container {
   display: grid;
   grid-template-areas:
-    "empty fret-numbers"
     "string-numbers fretboard";
   grid-template-columns: 50px 1fr;
-  grid-template-rows: 30px 1fr;
+  grid-template-rows: 1fr;
   margin: 2rem auto;
   width: 95%;
   max-width: 1800px;

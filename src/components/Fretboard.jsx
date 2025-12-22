@@ -114,7 +114,7 @@ const Fretboard = ({ scale = [], tuning = ['E', 'A', 'D', 'G', 'B', 'E'].reverse
   const renderStringNumbers = () => {
     const stringNumbers = [];
     for (let i = 0; i < strings; i++) {
-      stringNumbers.push(<div key={`string-num-${i}`} className="string-number">{strings - i}</div>);
+      stringNumbers.push(<div key={`string-num-${i}`} className="string-number">{i + 1}</div>);
     }
     return stringNumbers;
   };
@@ -129,8 +129,6 @@ const Fretboard = ({ scale = [], tuning = ['E', 'A', 'D', 'G', 'B', 'E'].reverse
         )}
       </div>
       <div className={`fretboard-container ${leftHanded ? 'left-handed' : ''}`}>
-        <div className="empty-corner"></div>
-        <div className="fret-numbers-container">{renderFretNumbers()}</div>
         <div className="string-numbers-container">{renderStringNumbers()}</div>
         <div className="fretboard">
           {renderFrets()}
