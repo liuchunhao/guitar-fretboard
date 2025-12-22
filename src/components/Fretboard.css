@@ -1,0 +1,183 @@
+.fretboard-container {
+  display: grid;
+  grid-template-areas:
+    "empty fret-numbers"
+    "string-numbers fretboard";
+  grid-template-columns: 50px 1fr;
+  grid-template-rows: 30px 1fr;
+  margin: 2rem auto;
+  width: 95%;
+  max-width: 1800px;
+}
+
+.fret-numbers-container {
+  grid-area: fret-numbers;
+  display: grid;
+  grid-template-columns: repeat(25, 1fr); /* 25 columns for 25 fret spaces (0-24) */
+  gap: 2px; /* Match the fretboard gap */
+  padding: 0 2px; /* Match the fretboard border width */
+}
+
+.fret-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.string-numbers-container {
+  grid-area: string-numbers;
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.string-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.fretboard {
+  grid-area: fretboard;
+  display: grid;
+  grid-template-columns: repeat(25, 1fr); /* 25 columns for 25 fret spaces (0-24) */
+  grid-template-rows: repeat(6, 1fr);
+  gap: 2px; /* This gap will serve as the fret lines */
+  background-color: #663300;
+  border: 2px solid #442200;
+  overflow-x: auto;
+}
+
+.fret {
+  position: relative;
+  background-color: burlywood; /* Maple color */
+  /* Removed border-right, gap now defines fret lines */
+  min-width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Nut is the first fret (fret 0) of each row */
+.fret:nth-child(25n + 1) { /* Targets the first cell of every 25 cells (i.e., fret 0 of each string) */
+  background-color: #8B4513; /* Nut color */
+  border-left: 4px solid #000; /* Nut visually to the left of open string space */
+  border-right: none; /* Ensure no right border for nut */
+  min-width: 50px;
+}
+
+.fret:hover .note-display {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Simulate strings with variable thickness */
+.fret::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  background-color: #808080; /* Gray */
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+/* Low E and A strings (thickest) */
+.fret:nth-child(n + 1):nth-child(-n + 50)::before { /* Covers string 6 (indices 0-24) and string 5 (indices 25-49) for a total of 50 frets in original structure*/
+  height: 3px;
+}
+
+/* D and G strings (medium) */
+.fret:nth-child(n + 51):nth-child(-n + 100)::before { /* Covers string 4 (indices 50-74) and string 3 (indices 75-99) */
+  height: 2px;
+}
+
+/* B and high E strings (thinnest) */
+.fret:nth-child(n + 101)::before { /* Covers string 2 (indices 100-124) and string 1 (indices 125-149) */
+  height: 1px;
+}
+
+.note-display {
+  width: 30px;
+  height: 30px;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.scale-note .note-display {
+  background-color: #4CAF50; /* A green color */
+  visibility: visible;
+  opacity: 1;
+}
+
+.root-note .note-display {
+  background-color: #f44336; /* A red color */
+}
+
+/* Pattern notes show circle but hide text by default */
+.pattern-note .note-display {
+  visibility: visible;
+  opacity: 1;
+  color: transparent; /* Hide the text */
+}
+
+/* Show text on hover */
+.pattern-note:hover .note-display {
+  color: white; /* Show the text */
+}
+
+.fret-marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: #442200;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.note-info {
+  margin: 20px;
+  height: 50px;
+  text-align: center;
+}
+
+
+/* --- Left-Handed View --- */
+
+.left-handed {
+  direction: rtl;
+}
+
+/* Swap the string/fret number columns */
+.left-handed .fretboard-container {
+  grid-template-areas:
+    "fret-numbers empty"
+    "fretboard string-numbers";
+  grid-template-columns: 1fr 50px;
+}
+
+/* Flip the fret borders */
+.left-handed .fret {
+  border-right: none; /* Already removed in main style, but good to ensure */
+  border-left: none; /* No individual fret borders for fret lines */
+}
+
+/* Flip the nut border */
+.left-handed .fret:nth-child(25n + 1) {
+  border-left: none; /* Remove left border for nut in left-handed mode */
+  border-right: 4px solid #000; /* Add right border for nut in left-handed mode */
+}
