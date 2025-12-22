@@ -212,9 +212,23 @@ function App() {
   const handlePatternChange = (e) => {
     setActivePatternName(e.target.value);
   };
-  
+
   // Get notes for the active pattern
   const activePatternNotes = scalePatterns[activeScale] ? scalePatterns[activeScale][activePatternName] : [];
+
+  // Group patterns by category
+  const getPatternsByCategory = () => {
+    if (!scalePatterns[activeScale]) return { allNotes: [], threeNPS: [], caged: [] };
+
+    const patternNames = Object.keys(scalePatterns[activeScale]);
+    return {
+      allNotes: patternNames.filter(name => name === 'All Notes'),
+      threeNPS: patternNames.filter(name => name.startsWith('3NPS')),
+      caged: patternNames.filter(name => name.startsWith('CAGED'))
+    };
+  };
+
+  const patternCategories = getPatternsByCategory();
 
 
   return (
@@ -250,22 +264,66 @@ function App() {
           ))}
         </div>
 
-        {/* New pattern selection controls */}
+        {/* Pattern selection controls grouped by category */}
         {scalePatterns[activeScale] && Object.keys(scalePatterns[activeScale]).length > 1 && (
           <div className="pattern-control">
-            <label>Pattern:</label>
-            {Object.keys(scalePatterns[activeScale]).map(patternName => (
-              <label key={patternName}>
-                <input
-                  type="radio"
-                  name="pattern"
-                  value={patternName}
-                  checked={activePatternName === patternName}
-                  onChange={handlePatternChange}
-                />
-                {patternName}
-              </label>
-            ))}
+            <label className="pattern-main-label">Pattern:</label>
+
+            {/* All Notes */}
+            {patternCategories.allNotes.length > 0 && (
+              <div className="pattern-category">
+                {patternCategories.allNotes.map(patternName => (
+                  <label key={patternName}>
+                    <input
+                      type="radio"
+                      name="pattern"
+                      value={patternName}
+                      checked={activePatternName === patternName}
+                      onChange={handlePatternChange}
+                    />
+                    {patternName}
+                  </label>
+                ))}
+              </div>
+            )}
+
+            {/* 3NPS Patterns */}
+            {patternCategories.threeNPS.length > 0 && (
+              <div className="pattern-category">
+                <div className="pattern-category-title">3NPS:</div>
+                {patternCategories.threeNPS.map(patternName => (
+                  <label key={patternName}>
+                    <input
+                      type="radio"
+                      name="pattern"
+                      value={patternName}
+                      checked={activePatternName === patternName}
+                      onChange={handlePatternChange}
+                    />
+                    {patternName.replace('3NPS - ', '')}
+                  </label>
+                ))}
+              </div>
+            )}
+
+            {/* CAGED Patterns */}
+            {patternCategories.caged.length > 0 && (
+              <div className="pattern-category">
+                <div className="pattern-category-title">CAGED:</div>
+                {patternCategories.caged.map(patternName => (
+                  <label key={patternName}>
+                    <input
+                      type="radio"
+                      name="pattern"
+                      value={patternName}
+                      checked={activePatternName === patternName}
+                      onChange={handlePatternChange}
+                    />
+                    {patternName.replace('CAGED - ', '')}
+                  </label>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
