@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(npm install:*)",
+      "Bash(node -e \"const findCacheDir = require\\(''./node_modules/find-cache-dir''\\); console.log\\(findCacheDir\\({name: ''gh-pages''}\\)\\)\")"
+    ]
+  }
+}

@@ -136,6 +136,11 @@
   color: white; /* Show the text */
 }
 
+/* Show text when show-all is active */
+.pattern-note.show-all .note-display {
+  color: white;
+}
+
 .fret-marker {
   position: absolute;
   top: 50%;

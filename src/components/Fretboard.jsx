@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Fretboard.css';
 
-const Fretboard = ({ scale = [], tuning = ['E', 'A', 'D', 'G', 'B', 'E'].reverse(), leftHanded = false, noteDisplayMode = 'all', getScaleDegreePhonetic, currentScaleRootNote, activePatternNotes }) => {
+const Fretboard = ({ scale = [], tuning = ['E', 'A', 'D', 'G', 'B', 'E'].reverse(), leftHanded = false, noteDisplayMode = 'all', getScaleDegreePhonetic, currentScaleRootNote, activePatternNotes, showAllNotes = false }) => {
   const [hoveredData, setHoveredData] = useState(null);
 
   const strings = 6;
@@ -52,6 +52,9 @@ const Fretboard = ({ scale = [], tuning = ['E', 'A', 'D', 'G', 'B', 'E'].reverse
           // Add pattern-note class when a specific pattern is selected (not 'All Notes')
           if (activePatternNotes.length > 0) {
             fretClassName += ' pattern-note';
+            if (showAllNotes) {
+              fretClassName += ' show-all';
+            }
           }
         }
         if (isRootNote) {

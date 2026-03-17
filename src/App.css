@@ -96,3 +96,23 @@
 .pattern-category input[type="radio"] {
   cursor: pointer;
 }
+
+.show-all-toggle {
+  padding: 0.5rem 1.2rem;
+  border: 1px solid #4CAF50;
+  background-color: transparent;
+  color: #4CAF50;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.show-all-toggle:hover {
+  background-color: #4CAF5022;
+}
+
+.show-all-toggle.active {
+  background-color: #4CAF50;
+  color: white;
+}
